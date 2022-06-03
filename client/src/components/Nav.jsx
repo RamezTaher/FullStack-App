@@ -44,12 +44,23 @@ const Nav = () => {
             </div>
           ) : (
             <div className="flex items-center gap-5">
-              <button className="bg-white text-primary px-5 py-2 cursor-pointer font-semibold hover:text-primary-tint transition-all">
-                Register
-              </button>
-              <button className="bg-white text-primary px-5 py-2 cursor-pointer font-semibold hover:text-primary-tint transition-all ">
-                Login
-              </button>
+              <Link
+                to={"/auth/signIn"}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <button className="bg-white text-primary px-5 py-2 cursor-pointer font-semibold hover:text-primary-tint transition-all ">
+                  Login
+                </button>
+              </Link>
+
+              <Link
+                to={"/auth/signUp"}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <button className="bg-white text-primary px-5 py-2 cursor-pointer font-semibold hover:text-primary-tint transition-all">
+                  Register
+                </button>
+              </Link>
             </div>
           )}
         </div>

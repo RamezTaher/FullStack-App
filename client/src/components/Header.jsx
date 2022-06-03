@@ -13,7 +13,7 @@ import "react-date-range/dist/styles.css" // main css file
 import "react-date-range/dist/theme/default.css" // theme css file
 
 import { format } from "date-fns"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { SearchContext } from "../context/SearchContext"
 import { AuthUserContext } from "../context/AuthUserContext"
 
@@ -94,9 +94,14 @@ const Header = ({ type }) => {
                 more with a free Booking.com account
               </p>
               {!user && (
-                <button className="bg-primary-tint text-white font-semibold p-2.5 cursor-pointer hover:bg-primary-tint/70 transition-all">
-                  Sign in / Register
-                </button>
+                <Link
+                  to={"/auth/signIn"}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  <button className="bg-primary-tint text-white font-semibold p-2.5 cursor-pointer hover:bg-primary-tint/70 transition-all">
+                    Sign in / Register
+                  </button>
+                </Link>
               )}
 
               <div className=" bg-white border-[3px] border-warning flex items-center justify-between p-2.5 rounded-md absolute -bottom-[25px] w-[95%] max-w-6xl">
