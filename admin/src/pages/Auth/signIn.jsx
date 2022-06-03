@@ -9,7 +9,7 @@ const SignIn = () => {
     password: undefined,
   })
 
-  const { loading, error, dispatch } = useContext(AuthUserContext)
+  const { loading, error, dispatchAuth } = useContext(AuthUserContext)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ const SignIn = () => {
 
   const handleClick = async (e) => {
     e.preventDefault()
-    dispatch({ type: "SIGNIN_START" })
+    dispatchAuth({ type: "SIGNIN_START" })
     try {
       const res = await axios.post(
         "http://localhost:8800/api/auth/signin",
@@ -26,16 +26,16 @@ const SignIn = () => {
       )
 
       if (res.data.isAdmin) {
-        dispatch({ type: "SIGNIN_SUCCESS", payload: res.data.details })
+        dispatchAuth({ type: "SIGNIN_SUCCESS", payload: res.data.details })
         navigate("/")
       } else {
-        dispatch({
+        dispatchAuth({
           type: "SIGNIN_FAILURED",
           payload: { message: "You are not allowed" },
         })
       }
     } catch (error) {
-      dispatch({ type: "SIGNIN_FAILURED", payload: error.response.data })
+      dispatchAuth({ type: "SIGNIN_FAILURED", payload: error.response.data })
     }
   }
 
