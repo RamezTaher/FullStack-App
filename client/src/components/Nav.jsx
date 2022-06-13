@@ -54,7 +54,7 @@ const Nav = () => {
               </Link>
 
               <Link
-                to={"/auth/signUp"}
+                to={"/auth/signup"}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 <button className="bg-white text-primary px-5 py-2 cursor-pointer font-semibold hover:text-primary-tint transition-all">

@@ -16,6 +16,7 @@ import { format } from "date-fns"
 import { Link, useNavigate } from "react-router-dom"
 import { SearchContext } from "../context/SearchContext"
 import { AuthUserContext } from "../context/AuthUserContext"
+import addDays from "date-fns/addDays"
 
 const Header = ({ type }) => {
   const { user } = useContext(AuthUserContext)
@@ -25,7 +26,7 @@ const Header = ({ type }) => {
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ])

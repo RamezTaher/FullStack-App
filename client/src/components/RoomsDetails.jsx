@@ -72,8 +72,8 @@ const RoomsDetails = ({ setOpen, hotelId }) => {
 
   return (
     <>
-      <section className="w-screen h-screen bg-black/40 fixed top-0 left-0 flex items-center justify-center">
-        <div className="bg-white p-5 relative ">
+      <section className="w-screen p-40 h-screen bg-black/40 fixed top-0 left-0 flex items-center justify-center">
+        <div className="bg-white w-1/2 h-3/4 overflow-scroll p-10  relative ">
           <div className="absolute top-1 right-2 text-lg cursor-pointer ">
             <FontAwesomeIcon
               icon={faCircleXmark}

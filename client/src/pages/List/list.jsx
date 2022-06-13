@@ -33,7 +33,7 @@ const List = () => {
     <>
       <Nav />
       <Header type="list" />
-      <section className="flex justify-center mt-5">
+      <section className="flex justify-center mt-5 py-10">
         <div className="w-full max-w-6xl flex gap-5">
           <div className="flex-1 bg-warning p-4 rounded-md h-fit sticky top-3">
             <h1 className="text-xl text-dark-shade mb-3 font-bold ">Search</h1>
@@ -132,7 +132,7 @@ const List = () => {
               Search
             </button>
           </div>
-          <div className="flex-[3] flex flex-col gap-4">
+          <div className="flex-[3] flex flex-col gap-5">
             {loading ? (
               "Loading..."
             ) : (
