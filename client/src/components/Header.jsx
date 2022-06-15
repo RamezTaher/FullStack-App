@@ -25,7 +25,7 @@ const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false)
   const [dates, setDates] = useState([
     {
-      startDate: new Date(),
+      startDate: addDays(new Date(), 0),
       endDate: addDays(new Date(), 1),
       key: "selection",
     },
