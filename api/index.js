@@ -7,6 +7,7 @@ import usersRoute from "./routes/users.js"
 import hotelsRoute from "./routes/hotels.js"
 import hotelRoomRoute from "./routes/hotelRoom.js"
 import restaurantRoute from "./routes/restaurant.js"
+import restaurantTableRoute from "./routes/restaurantTable.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 
@@ -33,6 +34,7 @@ app.use("/api/users", usersRoute)
 app.use("/api/hotels", hotelsRoute)
 app.use("/api/rooms", hotelRoomRoute)
 app.use("/api/restaurant", restaurantRoute)
+app.use("/api/tables", restaurantTableRoute)
 
 // ERROR HANDLING MIDDLEWARE
 app.use((err, req, res, next) => {
