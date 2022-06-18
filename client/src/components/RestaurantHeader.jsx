@@ -9,40 +9,37 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useContext, useState } from "react"
-import { DateRange } from "react-date-range"
+import { Calendar, DateRange } from "react-date-range"
 import "react-date-range/dist/styles.css" // main css file
 import "react-date-range/dist/theme/default.css" // theme css file
 
 import { format } from "date-fns"
 import { Link, useNavigate } from "react-router-dom"
-import { SearchContext } from "../context/SearchContext"
 import { AuthUserContext } from "../context/AuthUserContext"
 import addDays from "date-fns/addDays"
+import { SearchRestaurantContext } from "../context/SearchRestaurantsContext"
 
-const Header = ({ type }) => {
+const RestaurantHeader = ({ type }) => {
   const { user } = useContext(AuthUserContext)
-
+  const { dispatch } = useContext(SearchRestaurantContext)
   const [destination, setDestination] = useState("")
   const [openDate, setOpenDate] = useState(false)
-  const [dates, setDates] = useState([
-    {
-      startDate: addDays(new Date(), 0),
-      endDate: addDays(new Date(), 1),
-      key: "selection",
-    },
-  ])
+  const [dates, setDates] = useState({
+    date: addDays(new Date(), 0),
+  })
 
   const [openOptions, setOpenOptions] = useState(false)
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
-    room: 1,
+    table: 1,
   })
 
   const navigate = useNavigate()
+
   const handleSearch = () => {
     dispatch({ type: "new", payload: { destination, dates, options } })
-    navigate("/hotels", { state: { destination, dates, options } })
+    navigate("/restaurants/search", { state: { destination, dates, options } })
   }
 
   const handleOption = (name, action) => {
@@ -54,8 +51,6 @@ const Header = ({ type }) => {
     })
   }
 
-  const { dispatch } = useContext(SearchContext)
-
   return (
     <>
       <header className="bg-primary text-white flex justify-center px-5 relative">
@@ -65,15 +60,8 @@ const Header = ({ type }) => {
           } `}
         >
           <div className="flex gap-10 mb-14  ">
-            <Link to={"/"} style={{ color: "inherit", textDecoration: "none" }}>
-              <div className="flex items-center gap-2 border border-solid border-white py-2 px-5 rounded-3xl">
-                <FontAwesomeIcon icon={faBed} />
-                <span>Stays</span>
-              </div>
-            </Link>
-
             <Link
-              to={"/restaurants"}
+              to={"/"}
               style={{
                 color: "inherit",
                 textDecoration: "none",
@@ -82,6 +70,15 @@ const Header = ({ type }) => {
               }}
             >
               <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faBed} />
+                <span>Stays</span>
+              </div>
+            </Link>
+            <Link
+              to={"/restaurants"}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <div className="flex items-center gap-2 border border-solid border-white py-2 px-5 rounded-3xl">
                 <FontAwesomeIcon icon={faBurger} />
                 <span>Restaurant</span>
               </div>
@@ -114,10 +111,10 @@ const Header = ({ type }) => {
 
               <div className=" bg-white border-[3px] border-warning flex items-center justify-between p-2.5 rounded-md absolute -bottom-[25px] w-[95%] max-w-6xl">
                 <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faBed} className="text-primary" />
+                  <FontAwesomeIcon icon={faBurger} className="text-primary" />
                   <input
                     type="text "
-                    placeholder="Your destination"
+                    placeholder="Where you Want to eat"
                     className="border-0 outline-0 placeholder:text-dark-shade text-primary"
                     onChange={(e) => setDestination(e.target.value)}
                   />
@@ -131,18 +128,13 @@ const Header = ({ type }) => {
                     onClick={() => setOpenDate(!openDate)}
                     className="text-dark-shade cursor-pointer"
                   >
-                    {`${format(dates[0].startDate, "dd/MM/yyyy")} to ${format(
-                      dates[0].endDate,
-                      "dd/MM/yyyy"
-                    )} `}
+                    {`${format(dates.date, "dd/MM/yyyy")} `}
                   </span>
 
                   {openDate && (
-                    <DateRange
-                      editableDateInputs={true}
-                      onChange={(item) => setDates([item.selection])}
-                      moveRangeOnFirstSelection={false}
-                      ranges={dates}
+                    <Calendar
+                      date={new Date()}
+                      onChange={(d) => setDates({ date: d })}
                       className="absolute top-12 z-20"
                     />
                   )}
@@ -153,7 +145,7 @@ const Header = ({ type }) => {
                     className="text-dark-shade cursor-pointer"
                     onClick={() => setOpenOptions(!openOptions)}
                   >
-                    {`${options.adult} adult · ${options.children} children · ${options.room} room`}
+                    {`${options.adult} adult · ${options.children} children · ${options.table} table`}
                   </span>
                   {openOptions && (
                     <div className="absolute top-16 bg-white text-dark-shade rounded-md shadow-md z-20">
@@ -196,19 +188,19 @@ const Header = ({ type }) => {
                         </div>
                       </div>
                       <div className="w-[200px] py-2.5 flex justify-between m-2.5">
-                        <span>Room</span>
+                        <span>Table</span>
                         <div className="flex center gap-2.5 text-sm text-black">
                           <button
                             disabled={options.room <= 1}
                             className="px-2.5  bg-dark disabled:cursor-not-allowed"
-                            onClick={() => handleOption("room", "-")}
+                            onClick={() => handleOption("table", "-")}
                           >
                             -
                           </button>
                           <span className="">{options.room}</span>
                           <button
                             className="px-2  bg-dark"
-                            onClick={() => handleOption("room", "+")}
+                            onClick={() => handleOption("table", "+")}
                           >
                             +
                           </button>
@@ -234,4 +226,4 @@ const Header = ({ type }) => {
   )
 }
 
-export default Header
+export default RestaurantHeader

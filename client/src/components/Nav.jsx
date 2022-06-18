@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useContext, useState } from "react"
 import { Link } from "react-router-dom"
 import { AuthUserContext } from "../context/AuthUserContext"
+import img from "../assets/logo.png"
 
 const Nav = () => {
   const { user, dispatch } = useContext(AuthUserContext)
@@ -13,11 +14,12 @@ const Nav = () => {
   }
   return (
     <>
-      <div className="h-[70px] bg-primary flex justify-center px-5">
+      <div className="h-[80px] bg-primary flex justify-center p-5">
         <div className="w-full max-w-6xl  text-white flex items-center justify-between">
           <Link to={"/"} style={{ color: "inherit", textDecoration: "none" }}>
-            <span className="font-[500] text-2xl">LOGO</span>
+            <img src={img} className="w-[50px] h-[50px]" alt="" />
           </Link>
+
           {user ? (
             <div className="relative">
               <div

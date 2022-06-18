@@ -17,7 +17,7 @@ const TableSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    TableNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
+    tableNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
   },
   { timestamps: true }
 )

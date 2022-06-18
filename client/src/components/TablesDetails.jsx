@@ -3,57 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import axios from "axios"
 import React, { useContext, useState } from "react"
 import useFetch from "../hooks/useFetch"
-import { SearchContext } from "../context/SearchContext"
 import { useNavigate } from "react-router-dom"
+import { SearchRestaurantContext } from "../context/SearchRestaurantsContext"
 
-const RoomsDetails = ({ setOpen, hotelId }) => {
-  const [selectedRooms, setSelectedRooms] = useState([])
-  const { dates } = useContext(SearchContext)
+const TableDetails = ({ setOpen, restaurantId }) => {
+  const [selectedTables, setSelectedTables] = useState([])
+  const { dates } = useContext(SearchRestaurantContext)
+  console.log(dates)
   const navigate = useNavigate()
 
-  const getDatesInRange = (startDate, endDate) => {
-    const start = new Date(startDate)
-    const end = new Date(endDate)
-
-    const date = new Date(start.getTime())
-
-    const dates = []
-
-    while (date <= end) {
-      dates.push(new Date(date).getTime())
-      date.setDate(date.getDate() + 1)
-    }
-
-    return dates
-  }
-
-  const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate)
-
-  const isAvailable = (roomNumber) => {
-    const isFound = roomNumber.unavailableDates.some((date) =>
-      alldates.includes(new Date(date).getTime())
-    )
-
-    return !isFound
-  }
-
   const { data, loading } = useFetch(
-    `http://localhost:8800/api/hotels/room/${hotelId}`
+    `http://localhost:8800/api/restaurant/table/${restaurantId}`
   )
   const handleClick = async () => {
     try {
-      await Promise.all(
-        selectedRooms.map((roomId) => {
-          const res = axios.put(
-            `http://localhost:8800/api/rooms/availability/${roomId}`,
-            {
-              dates: alldates,
-            }
-          )
-          return res.data
-        })
-      )
-
+      console.log(selectedTables)
       setOpen(false)
       navigate("/")
     } catch (error) {
@@ -64,10 +28,10 @@ const RoomsDetails = ({ setOpen, hotelId }) => {
   const handleSelect = (e) => {
     const checked = e.target.checked
     const value = e.target.value
-    setSelectedRooms(
+    setSelectedTables(
       checked
-        ? [...selectedRooms, value]
-        : selectedRooms.filter((item) => item !== value)
+        ? [...selectedTables, value]
+        : selectedTables.filter((item) => item !== value)
     )
   }
 
@@ -95,19 +59,18 @@ const RoomsDetails = ({ setOpen, hotelId }) => {
                     <span className="font-medium">Max People</span>{" "}
                     <span>{item.maxPeople}</span>
                   </div>
-                  <div className="font-medium">Price {item.price}</div>
+                  <div className="font-medium">Price : {item.price}</div>
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs text-dark-shade">
-                  {item.roomNumbers.map((roomNumber, idx) => (
+                  {item.tableNumbers.map((tableNumber, idx) => (
                     <div key={idx} className="flex flex-col items-center">
-                      <label htmlFor="number">{roomNumber.number}</label>
+                      <label htmlFor="number">{tableNumber.number}</label>
                       <input
                         id="number"
                         name="number"
                         type="checkbox"
-                        value={roomNumber._id}
+                        value={tableNumber._id}
                         onChange={handleSelect}
-                        disabled={!isAvailable(roomNumber)}
                       />
                     </div>
                   ))}
@@ -127,4 +90,4 @@ const RoomsDetails = ({ setOpen, hotelId }) => {
   )
 }
 
-export default RoomsDetails
+export default TableDetails

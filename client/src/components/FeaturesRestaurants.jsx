@@ -1,14 +1,14 @@
 import React from "react"
 import useFetch from "../hooks/useFetch"
 
-const FeaturesProperties = () => {
+const FeaturesRestaurants = () => {
   const { data, loading } = useFetch(
-    "http://localhost:8800/api/hotels?featured=true&limit=4"
+    "http://localhost:8800/api/restaurant?featured=true&limit=4"
   )
 
   return (
     <>
-      <div className="w-full max-w-6xl grid grid-cols-4 items-center  gap-5">
+      <div className="w-full max-w-6xl grid grid-cols-4 items-center gap-5">
         {loading ? (
           "Loading..."
         ) : (
@@ -45,4 +45,4 @@ const FeaturesProperties = () => {
   )
 }
 
-export default FeaturesProperties
+export default FeaturesRestaurants

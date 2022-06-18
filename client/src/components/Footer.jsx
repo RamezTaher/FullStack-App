@@ -104,7 +104,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="text-center text-sm font-medium">
-          Copyright © {new Date().getFullYear()} Logo.
+          Copyright © {new Date().getFullYear()} Royal Rental.
         </div>
       </footer>
     </>
