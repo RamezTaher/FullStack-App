@@ -34,6 +34,8 @@ const Hotel = () => {
     `http://localhost:8800/api/hotels/find/${hotelId}`
   )
 
+  console.log(data)
+
   //Stackoverflow fonction
   const msPerDay = 1000 * 60 * 60 * 24
   const dayDifference = (date1, date2) => {

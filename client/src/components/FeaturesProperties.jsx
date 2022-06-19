@@ -1,10 +1,37 @@
-import React from "react"
+import React, { useContext, useState } from "react"
+import { Link, Navigate } from "react-router-dom"
+import { SearchContext } from "../context/SearchContext"
 import useFetch from "../hooks/useFetch"
+import { useNavigate } from "react-router-dom"
+import addDays from "date-fns/addDays"
 
 const FeaturesProperties = () => {
   const { data, loading } = useFetch(
     "http://localhost:8800/api/hotels?featured=true&limit=4"
   )
+
+  const [destination, setDestination] = useState("")
+  const [dates, setDates] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 1),
+      key: "selection",
+    },
+  ])
+
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  })
+  const navigate = useNavigate()
+
+  const { dispatch } = useContext(SearchContext)
+  const handleSearch = (d, id) => {
+    console.log(d)
+    dispatch({ type: "new", payload: { destination: d, dates, options } })
+    navigate(`/hotels/${id}`, { state: { destination: d, dates, options } })
+  }
 
   return (
     <>
@@ -15,6 +42,9 @@ const FeaturesProperties = () => {
           <>
             {data.map((item) => (
               <div
+                onClick={() => {
+                  handleSearch(item.city, item._id)
+                }}
                 className="col-span-1 gap-2 flex flex-col cursor-pointer"
                 key={item._id}
               >
